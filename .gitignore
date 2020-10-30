@@ -1,1 +1,5 @@
 node_modules
+.env
+who.js
+whos.json
+try.Controller.js
