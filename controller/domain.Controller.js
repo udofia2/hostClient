@@ -42,7 +42,7 @@ const domainActions = () => {
           if (data.trim().startsWith("No")) {
             resolve(data);
             console.log(`${domain} is available`);
-            return res.json(domain);
+            return res.json(`${domain} is available`);
           }
 
           //For domains that are not available, sugestions are made
