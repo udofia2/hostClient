@@ -42,7 +42,7 @@ const domainActions = () => {
           if (data.trim().startsWith("No")) {
             resolve(data);
             console.log(`${domain} is available`);
-            return res.json(`${domain} is available`);
+            return res.json(`CONGRATULATIONS ${domain} is available. You can Proceed to register the doamin`);
           }
 
           //For domains that are not available, sugestions are made
@@ -75,16 +75,12 @@ const domainActions = () => {
       setTimeout(() => {
         res.redirect("/api/domain/hit");
         
-      }, 5000);
+      }, 2000);
 
       //clear the database for a new request
 
       await mongoose.connection.db.dropCollection("domains", (err, result) => {
         console.log("Collection dropped");
-        //     res.json({
-        //       msg: "just something to test",
-        //       found,
-        //     });
       });
     };
 
@@ -98,6 +94,7 @@ const domainActions = () => {
       found,
     });
   };
+  
   const domains = async (req, res) => {
     res.render("domain");
   };
