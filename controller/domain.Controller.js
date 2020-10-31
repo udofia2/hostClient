@@ -42,7 +42,11 @@ const domainActions = () => {
           if (data.trim().startsWith("No")) {
             resolve(data);
             console.log(`${domain} is available`);
-            return res.json(`CONGRATULATIONS ${domain} is available. You can Proceed to register the doamin`);
+            return res.render("found", {
+              msg: `CONGRATULATIONS ${domain} is available. You can Proceed to register the doamin`,
+              domain
+          });
+
           }
 
           //For domains that are not available, sugestions are made
@@ -89,14 +93,14 @@ const domainActions = () => {
 
   const display = async (req, res) => {
     const found = await Domains.find({});
-    res.render("list", {
+    res.render("suggestions", {
       msg: `available domains`,
       found,
     });
   };
-  
+
   const domains = async (req, res) => {
-    res.render("domain");
+    res.render("search");
   };
 
   return {
