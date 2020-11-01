@@ -8,6 +8,7 @@ const domainActions = () => {
   //A function that makes a request to whois for available domains
   const newDomain = async (req, res) => {
     const { name } = req.body;
+    
 
     //Takesn out the extension in a given domain
     const exp = /(\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/;
@@ -39,10 +40,13 @@ const domainActions = () => {
           if (err) reject(err);
 
           //informs users that the domain is available
+          resolve(data);
           if (data.trim().startsWith("No")) {
-            resolve(data);
             console.log(`${domain} is available`);
-            return res.json(domain);
+            return res.render("found", {
+              domain
+          });
+
           }
 
           //For domains that are not available, sugestions are made
@@ -72,40 +76,40 @@ const domainActions = () => {
       });
 
       //waits for seconds before redirecting to fetch all available doamins from dtabase
-      setTimeout(() => {
-        res.redirect("/api/domain/hit");
+      setTimeout(async () => {
+        // const found = await Domains.find({})
+        // return res.render('result', found)
+        res.redirect("domain/result");
         
-      }, 5000);
+      }, 4000);
 
       //clear the database for a new request
 
       await mongoose.connection.db.dropCollection("domains", (err, result) => {
         console.log("Collection dropped");
-        //     res.json({
-        //       msg: "just something to test",
-        //       found,
-        //     });
       });
     };
 
     await whoisP(name);
   };
 
-  const display = async (req, res) => {
+  const result = async (req, res) => {
     const found = await Domains.find({});
-    res.render("list", {
+    res.render("result", {
       msg: `available domains`,
       found,
     });
   };
-  const domains = async (req, res) => {
-    res.render("domain");
-  };
+
+  const index = async (req, res) => {
+    res.render("index")
+  }
 
   return {
-    domains,
     newDomain,
-    display,
+    index,
+    result,
+    
   };
 };
 
