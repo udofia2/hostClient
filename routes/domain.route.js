@@ -1,12 +1,11 @@
 const express = require('express')
 const domainRouter = express.Router()
 const Domains = require('./../model/domain.model')
-const { newDomain, domains, display } = require('./../controller/domain.Controller')(Domains)
-// const { a } = require('./../controller/try.Controller')()
+const {  newDomain,index, result, } = require('./../controller/domain.Controller')(Domains)
 
-domainRouter.route('/hit').get(display)
+
 domainRouter.route('/').post(newDomain)
-domainRouter.route('/').get(domains)
-
+domainRouter.route('/').get(index)
+domainRouter.route('/result').get(result)
 
 module.exports = domainRouter

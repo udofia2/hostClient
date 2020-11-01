@@ -8,6 +8,7 @@ const domainActions = () => {
   //A function that makes a request to whois for available domains
   const newDomain = async (req, res) => {
     const { name } = req.body;
+    
 
     //Takesn out the extension in a given domain
     const exp = /(\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/;
@@ -39,11 +40,10 @@ const domainActions = () => {
           if (err) reject(err);
 
           //informs users that the domain is available
+          resolve(data);
           if (data.trim().startsWith("No")) {
-            resolve(data);
             console.log(`${domain} is available`);
             return res.render("found", {
-              msg: `CONGRATULATIONS ${domain} is available. You can Proceed to register the doamin`,
               domain
           });
 
@@ -76,10 +76,12 @@ const domainActions = () => {
       });
 
       //waits for seconds before redirecting to fetch all available doamins from dtabase
-      setTimeout(() => {
-        res.redirect("/api/domain/hit");
+      setTimeout(async () => {
+        // const found = await Domains.find({})
+        // return res.render('result', found)
+        res.redirect("domain/result");
         
-      }, 2000);
+      }, 4000);
 
       //clear the database for a new request
 
@@ -91,22 +93,23 @@ const domainActions = () => {
     await whoisP(name);
   };
 
-  const display = async (req, res) => {
+  const result = async (req, res) => {
     const found = await Domains.find({});
-    res.render("suggestions", {
+    res.render("result", {
       msg: `available domains`,
       found,
     });
   };
 
-  const domains = async (req, res) => {
-    res.render("search");
-  };
+  const index = async (req, res) => {
+    res.render("index")
+  }
 
   return {
-    domains,
     newDomain,
-    display,
+    index,
+    result,
+    
   };
 };
 
