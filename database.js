@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const dbConnection = () => {
   const db = mongoose.connection;
 
-  mongoose.connect(process.env.MONGO_LOCAL, {
+  mongoose.connect(process.env.MONGO_HOSTED, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
