@@ -1,20 +1,24 @@
 const whois = require("whois");
-const fs = require("fs");
 const mongoose = require("mongoose");
 
 const Domains = require("./../model/domain.model");
 
 const domainActions = () => {
-  //A function that makes a request to whois for available domains
+  /**
+   * @param       POST /api/domain
+   * @desc        searches availability of domains on whois
+   * @access      public( Every one can access)
+   */
   const newDomain = async (req, res) => {
     const { name } = req.body;
     
 
-    //Takesn out the extension in a given domain
+    //Takes out the domain extension in a given domain
     const exp = /(\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]/;
 
     const domainWithoutSuffix = name.slice(0, name.match(exp).index);
 
+    //list of domain extentions
     const extensions = [
       ".com",
       ".org",
@@ -33,6 +37,7 @@ const domainActions = () => {
       ".space",
     ];
 
+    
     const whoisP = async (domain, opts = {}) => {
       //Makes a new lookup to whois
       return new Promise((resolve, reject) => {
@@ -46,7 +51,6 @@ const domainActions = () => {
             return res.render("found", {
               domain
           });
-
           }
 
           //For domains that are not available, sugestions are made
@@ -77,8 +81,6 @@ const domainActions = () => {
 
       //waits for seconds before redirecting to fetch all available doamins from dtabase
       setTimeout(async () => {
-        // const found = await Domains.find({})
-        // return res.render('result', found)
         res.redirect("domain/result");
         
       }, 4000);
@@ -93,6 +95,11 @@ const domainActions = () => {
     await whoisP(name);
   };
 
+  /**
+   * @param       GET /api/domain
+   * @desc        displays result of list of available domains based on users requests
+   * @access      public( Every one can access)
+   */
   const result = async (req, res) => {
     const found = await Domains.find({});
     res.render("result", {
@@ -101,6 +108,11 @@ const domainActions = () => {
     });
   };
 
+  /**
+   * @param       GET /api/domain
+   * @desc        Present users with an interface to make a search request And so renders the homepage
+   * @access      public( Every one can access)
+   */
   const index = async (req, res) => {
     res.render("index")
   }
@@ -108,8 +120,7 @@ const domainActions = () => {
   return {
     newDomain,
     index,
-    result,
-    
+    result    
   };
 };
 
