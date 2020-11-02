@@ -13,7 +13,7 @@
 - Run `cp sample.env .env ` to create the default variables and kindly fill them
 - Run `npm run dev` to start development server
 - Head over to your browser and enter `localhost:<port>/api/domain` to display the home page.
-- where <port> is the port number you specified in the `.env` variable setup
+- where `<port>` is the port number you specified in the `.env` variable setup
 
 ## Technologies Used
 
