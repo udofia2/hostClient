@@ -1,5 +1,6 @@
 node_modules
 .env
+string.js
 who.js
 whos.json
 try.Controller.js
