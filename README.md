@@ -1,6 +1,6 @@
 # Domain Availability Search
 
-### Helps users search for the availablity of a domain. If the domain is taken, it provides users with list of available domains
+#### Helps users search for the availablity of a domain. If the domain is taken, it provides users with list of available domains
 
 ## Pre-Requisites
 
